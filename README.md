@@ -1,4 +1,4 @@
-# managehomeschool application
+# manage-homeschool application
 ### Ruby Version:
 ```
 2.5.3

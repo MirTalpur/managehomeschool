@@ -1,24 +1,34 @@
-# README
+# managehomeschool application
+### Ruby Version:
+```
+2.5.3
+```
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### DB:
+Uses postgresql on mac we can install using
+```
+brew install postgresql
+brew tap homebrew/services
+brew services start postgresql
+```
 
-Things you may want to cover:
+First time setting up
+```
+rails db:create
+rails db:migrate
+```
+To drop the DB:
+```
+rails db:drop
+```
 
-* Ruby version
+### System dependencies:
+```
+The system dependencies are stated in the Gemfile
+```
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### TODO:
+1) Deployment instructions
+2) Services (job queues, cache servers, search engines, etc.)
+3) How to run the test suite
+4) Create DB seed data

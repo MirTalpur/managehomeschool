@@ -3,11 +3,22 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  
+  #has_one :UserType, :polymorphic => true, dependent: :destroy
   after_create :create_teacher_or_student, on: :create
   after_update :update_teacher_or_student, on: :update
+  before_destroy :destroy_teacher_or_student
 
   private
+  def destroy_teacher_or_student
+    if self.user_type.eql? "teacher"
+      teacher = Teacher.where('user_id = ?', self.id).first
+      teacher.destroy
+    else
+      student = Student.where('user_id = ?', self.id).first
+      student.destroy
+    end
+  end
+
   def create_teacher_or_student
     # teacher = Teacher.create(:email => self.email, :password => self.password, :user_id => self.id)
     #[#<User id: 2, email: "test1@gmail.com", 
@@ -16,11 +27,11 @@ class User < ApplicationRecord
     if self.user_type.eql? "teacher"
       teacher = Teacher.create(:email => self.email, :password => self.password, :created_at => self.created_at,
                                :updated_at => self.updated_at, :user_id => self.id)
-      teacher.save
+      teacher.save!
     else
       student = Student.create(:email => self.email, :password => self.password, :created_at => self.created_at,
                                :updated_at => self.updated_at, :user_id => self.id)
-      student.save
+      student.save!
     end
   end
 
@@ -28,11 +39,11 @@ class User < ApplicationRecord
     if self.user_type.eql? "teacher"
       teacher = Teacher.where(:id => self.id).update_all(:email => self.email, :password => self.password, :created_at => self.created_at,
                                                          :updated_at => self.updated_at, :user_id => self.id)
-      teacher.save
+      teacher.save!
     else
       student = Student.where(:id => self.id).update_all(:email => self.email, :password => self.password, :created_at => self.created_at,
                                                          :updated_at => self.updated_at, :user_id => self.id)
-      student.save
+      student.save!
     end
   end
 end

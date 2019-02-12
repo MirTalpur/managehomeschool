@@ -4,4 +4,5 @@ class Student < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_one :teacher
+  belongs_to :user
 end

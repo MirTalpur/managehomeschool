@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2019_02_12_051608) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
     t.integer "teacher_id"
     t.index ["email"], name: "index_students_on_email", unique: true
     t.index ["reset_password_token"], name: "index_students_on_reset_password_token", unique: true
@@ -50,7 +51,6 @@ ActiveRecord::Schema.define(version: 2019_02_12_051608) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "user_type", default: "teacher"
-    t.integer "user_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

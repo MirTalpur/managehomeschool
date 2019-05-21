@@ -3,7 +3,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  #has_one :UserType, :polymorphic => true, dependent: :destroy
+  # has_one :UserType, :polymorphic => true, dependent: :destroy
+  # TODO: make this more exlusive make sure the type is actually student
   after_create :create_teacher_or_student, on: :create
   after_update :update_teacher_or_student, on: :update
   before_destroy :destroy_teacher_or_student
@@ -36,14 +37,24 @@ class User < ApplicationRecord
   end
 
   def update_teacher_or_student
+    # determine the type of model requiring updating
     if self.user_type.eql? "teacher"
-      teacher = Teacher.where(:id => self.id).update_all(:email => self.email, :password => self.password, :created_at => self.created_at,
-                                                         :updated_at => self.updated_at, :user_id => self.id)
-      teacher.save!
-    else
-      student = Student.where(:id => self.id).update_all(:email => self.email, :password => self.password, :created_at => self.created_at,
-                                                         :updated_at => self.updated_at, :user_id => self.id)
-      student.save!
+      model = Teacher
+    elsif self.user_type.eql? "student"
+      model = Student
+    end
+    # figure out the model association
+    model_association = model.where('user_id = ?', self.id).first
+    # check which fields need updating
+    if self.previous_changes[:email] && self.previous_changes[:password]
+      model_association.update(:email => self.email, :password => self.password)
+      model_association.save!
+    elsif self.previous_changes[:email]
+      model_association.update(:email => self.email)
+      model_association.save!
+    elsif self.previous_changes[:password]
+      model_association.update(:password => self.password)
+      model_association.save!
     end
   end
 end

@@ -1,4 +1,6 @@
-# TODO should a teacher be able to be created without a User creation
+# TODO should a teacher be able to be created without a User creation (currently you can't create a teacher without
+# a User model being created do we want this behavior? Leaning towards yes because than Teachers can be created without
+# any User models corresponding to)
 # require 'rails_helper'
 #
 # RSpec.describe Teacher, type: :model do

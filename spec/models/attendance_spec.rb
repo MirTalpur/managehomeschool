@@ -24,6 +24,7 @@ RSpec.describe Attendance, type: :model do
 
     it "has files as path" do
       file = "https://s3.com/path/to/file"
+      file.gsub("\u0000", '')
       @attendance.update(:files => file)
       expect(@attendance.files).to eq(file)
     end

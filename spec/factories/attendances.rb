@@ -4,5 +4,6 @@ FactoryBot.define do
     attending { Faker::Boolean.boolean }
     reason { Faker::String.random }
     association :student, factory: :student
+    files { Faker::File.file_name }
   end
 end

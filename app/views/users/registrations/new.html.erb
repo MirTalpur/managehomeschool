@@ -1,0 +1,29 @@
+<%= stylesheet_link_tag 'auth' %>
+
+<%= form_for(resource, as: resource_name, :html => {class: "wrapper"}, url: registration_path(resource_name)) do |f| %>
+  <div class="inner">
+    <%= image_tag( "image-1.png", :alt=> "", :class => "image-1") %>
+    <div class="form-outer">
+      <h3>Sign Up</h3>
+      <div class="form-holder">
+        <span class="lnr lnr-envelope"></span>
+        <%= f.text_field :email, placeholder: "Email", :class=> "form-control", autofocus: true, autocomplete: "email"%>
+      </div>
+      <div class="form-holder">
+        <span class="lnr lnr-lock"></span>
+        <%= f.password_field :password, placeholder: "Password", :class=> "form-control", autocomplete: "new-password" %>
+      </div>
+      <div class="form-holder">
+        <span class="lnr lnr-lock"></span>
+        <%= f.password_field :password_confirmation, placeholder: "Confirm Password", :class=> "form-control", autofocus: true, autocomplete: "new-password"%>
+      </div>
+      <%= f.button :submit do %>
+        <span>Sign Up</span>
+      <% end %>
+
+      <%= render "users/shared/links" %>
+    </div>
+    <%= image_tag( "image-2.png", :alt=> "", :class => "image-2") %>
+  </div>
+
+<% end %>
